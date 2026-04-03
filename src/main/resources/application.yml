@@ -1,0 +1,138 @@
+spring:
+  application:
+    name: payment-gateway
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:payments}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual         # Ack manual — só confirma após processamento
+        prefetch: 5
+        retry:
+          enabled: false                  # Retry gerenciado por nós via Outbox
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,circuitbreakers,retries
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+# ─── Resilience4j ─────────────────────────────────────────────────────────────
+resilience4j:
+
+  # Circuit Breaker
+  circuitbreaker:
+    instances:
+      bankAcquirer:
+        # Janela deslizante: conta as últimas 10 chamadas
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        # Abre o circuito se >= 50% falharem
+        failure-rate-threshold: 50
+        # Considera lento se > 3s
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 80
+        # Aguarda 15s no estado OPEN antes de tentar HALF-OPEN
+        wait-duration-in-open-state: 15s
+        # Permite 3 chamadas no estado HALF-OPEN para testar recuperação
+        permitted-number-of-calls-in-half-open-state: 3
+        # Abre com pelo menos 5 chamadas registradas
+        minimum-number-of-calls: 5
+        # Exceções que ativam o Circuit Breaker
+        record-exceptions:
+          - com.drystorm.payment.exception.AcquirerUnavailableException
+          - java.util.concurrent.TimeoutException
+          - java.net.ConnectException
+        # Exceções ignoradas (não contam para a taxa de falha)
+        ignore-exceptions:
+          - com.drystorm.payment.exception.PaymentDeclinedException
+
+  # Retry com Exponential Backoff
+  retry:
+    instances:
+      bankAcquirer:
+        max-attempts: 3
+        wait-duration: 500ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2.0   # 500ms → 1s → 2s
+        exponential-max-wait-duration: 30s
+        retry-exceptions:
+          - com.drystorm.payment.exception.AcquirerUnavailableException
+          - java.net.ConnectException
+        ignore-exceptions:
+          - com.drystorm.payment.exception.PaymentDeclinedException
+
+  # Rate Limiter (proteção contra burst de requisições ao adquirente)
+  ratelimiter:
+    instances:
+      bankAcquirer:
+        limit-for-period: 20              # máx 20 chamadas
+        limit-refresh-period: 1s          # por segundo
+        timeout-duration: 2s
+
+  # Bulkhead (limita concorrência ao adquirente)
+  bulkhead:
+    instances:
+      bankAcquirer:
+        max-concurrent-calls: 10
+        max-wait-duration: 500ms
+
+# ─── Configurações da aplicação ────────────────────────────────────────────────
+app:
+  outbox:
+    poll-interval-ms: 3000             # Publica eventos do outbox a cada 3s
+    batch-size: 50
+  retry:
+    max-attempts: 5                    # Máximo de tentativas de pagamento
+    # Delays em ms: 1s, 5s, 30s, 2min, 10min (Exponential Backoff)
+    delays-ms: [1000, 5000, 30000, 120000, 600000]
+  acquirer:
+    # Probabilidade de falha simulada (0.0 a 1.0)
+    failure-rate: ${ACQUIRER_FAILURE_RATE:0.3}
+    timeout-ms: ${ACQUIRER_TIMEOUT_MS:2000}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
