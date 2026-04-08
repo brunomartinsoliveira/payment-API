@@ -1,22 +1,6 @@
 # Payment Gateway - API drystorm
 
-> Sistema de Gateway de Pagamentos com retentativas inteligentes — DryStorm
-
-![esquemazitaç](https://github.com/user-attachments/assets/0dc5e854-0d5f-4569-9717-9d6cf2ff7a7c)
-
----
-
-## Padrões implementados
-
-| Padrão | Implementação | Objetivo |
-|--------|--------------|----------|
-| **Outbox Pattern** | `outbox_events` + `OutboxPublisher` | Consistência entre banco e mensageria |
-| **Circuit Breaker** | Resilience4j `@CircuitBreaker` | Protege contra falhas em cascata |
-| **Exponential Backoff** | Filas RabbitMQ com TTL | Retentativas espaçadas inteligentemente |
-| **Idempotência** | `idempotency_key` único | Evita cobranças duplicadas |
-| **Bulkhead** | Resilience4j `@Bulkhead` | Limita concorrência ao adquirente |
-| **Rate Limiter** | Resilience4j `@RateLimiter` | Protege contra burst de requisições |
-| **Dead Letter Queue** | `payments.dlq` | Pagamentos sem solução após 5 tentativas |
+> Sistema de Pagamentos com retentativas inteligentes para a minha landding page DryStorm
 
 ---
 
@@ -35,6 +19,22 @@ docker compose up -d
 # 4. Com PgAdmin e ferramentas extras
 docker compose --profile tools up -d
 ```
+
+---
+
+## Padrões implementados
+
+| Padrão | Implementação | Objetivo |
+|--------|--------------|----------|
+| **Outbox Pattern** | `outbox_events` + `OutboxPublisher` | Consistência entre banco e mensageria |
+| **Circuit Breaker** | Resilience4j `@CircuitBreaker` | Protege contra falhas em cascata |
+| **Exponential Backoff** | Filas RabbitMQ com TTL | Retentativas espaçadas inteligentemente |
+| **Idempotência** | `idempotency_key` único | Evita cobranças duplicadas |
+| **Bulkhead** | Resilience4j `@Bulkhead` | Limita concorrência ao adquirente |
+| **Rate Limiter** | Resilience4j `@RateLimiter` | Protege contra burst de requisições |
+| **Dead Letter Queue** | `payments.dlq` | Pagamentos sem solução após 5 tentativas |
+
+
 
 | Serviço | URL |
 |---------|-----|
