@@ -1,4 +1,4 @@
-# ⚡ Payment Gateway — Resiliência com Circuit Breaker e Outbox Pattern
+# ⚡ Payment Gateway
 
 > Sistema de Gateway de Pagamentos com retentativas inteligentes — DryStorm
 
