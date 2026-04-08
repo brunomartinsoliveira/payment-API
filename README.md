@@ -79,19 +79,6 @@ POST /api/v1/payments
 └─────────────────────────────────────┘
 ```
 
-### Exponential Backoff — filas de retry
-
-| Tentativa | Fila | Delay |
-|-----------|------|-------|
-| 1ª | `payments.retry.1s` | 1 segundo |
-| 2ª | `payments.retry.5s` | 5 segundos |
-| 3ª | `payments.retry.30s` | 30 segundos |
-| 4ª | `payments.retry.2min` | 2 minutos |
-| 5ª | `payments.retry.10min` | 10 minutos |
-| > 5 | `payments.dlq` | Dead Letter |
-
----
-
 ## Endpoints
 
 ### Público
