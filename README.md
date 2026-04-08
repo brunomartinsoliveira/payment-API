@@ -1,6 +1,15 @@
 # Payment Gateway - API drystorm
 
-> Sistema de Pagamentos com retentativas inteligentes para a minha landding page DryStorm
+![esquemazitaç](https://github.com/user-attachments/assets/8cfceb81-ab90-4d3b-876f-f15201741cfc)
+
+
+> Após 8 meses de desenvolvimento eu projetei o fluxo de pagamentos da minha API/Landing Page.
+
+---
+
+## O que é isso?
+
+Drystorm é um projeto full stack com backend em Java, contemplando API REST, autenticação de usuários (login) e fluxo de pagamentos. No frontend, foi desenvolvida uma landing page responsiva com HTML5 e CSS3, priorizando usabilidade e performance. O projeto reforça minha experiência em integração entre camadas, boas práticas de desenvolvimento e construção de aplicações web com foco em qualidade e escalabilidade.
 
 ---
 
@@ -28,19 +37,7 @@ docker compose --profile tools up -d
 
 ---
 
-## Padrões implementados
-
-| Padrão | Implementação | Objetivo |
-|--------|--------------|----------|
-| **Outbox Pattern** | `outbox_events` + `OutboxPublisher` | Consistência entre banco e mensageria |
-| **Circuit Breaker** | Resilience4j `@CircuitBreaker` | Protege contra falhas em cascata |
-| **Exponential Backoff** | Filas RabbitMQ com TTL | Retentativas espaçadas inteligentemente |
-| **Idempotência** | `idempotency_key` único | Evita cobranças duplicadas |
-| **Bulkhead** | Resilience4j `@Bulkhead` | Limita concorrência ao adquirente |
-| **Rate Limiter** | Resilience4j `@RateLimiter` | Protege contra burst de requisições |
-| **Dead Letter Queue** | `payments.dlq` | Pagamentos sem solução após 5 tentativas |
-
-
+## Padrões implementados:
 
 | Serviço | URL |
 |---------|-----|
@@ -51,7 +48,7 @@ docker compose --profile tools up -d
 
 ---
 
-## Fluxo de pagamento
+## Como funciona?
 
 ```
 POST /api/v1/payments
@@ -106,7 +103,7 @@ POST   /api/v1/payments/{id}/retry   # Forçar retry manual
 
 ---
 
-## Variável de ambiente `ACQUIRER_FAILURE_RATE`
+## Variável de ambiente:
 
 Controla a taxa de falha do banco simulado:
 - `0.0` — nunca falha (Circuit Breaker sempre CLOSED)
@@ -129,9 +126,9 @@ Cobertura principal:
 
 ---
 
-## Stack
+## Stack Tecnológico
 
-- **Java 21** + **Spring Boot 3.2**
-- **RabbitMQ 3.13** com filas TTL para Exponential Backoff
-- **PostgreSQL 16**
+- **Java 21** + **Spring Boot**
+- **PostgreSQL**
+- **RabbitMQ**
 - **Docker** + **Docker Compose**
