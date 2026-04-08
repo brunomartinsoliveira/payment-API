@@ -89,46 +89,6 @@ GET    /api/v1/payments?merchantId=  # Listar por merchant
 PATCH  /api/v1/payments/{id}/cancel  # Cancelar
 POST   /api/v1/payments/{id}/retry   # Forçar retry manual
 ```
-
-### Monitoramento Circuit Breaker
-```
-GET    /api/v1/circuit-breaker       # Estado atual + métricas
-POST   /api/v1/circuit-breaker/reset # Resetar para CLOSED
-POST   /api/v1/circuit-breaker/open  # Forçar OPEN (testes)
-```
-
-### Actuator
-```
-GET    /actuator/health
-GET    /actuator/metrics
-GET    /actuator/prometheus
-GET    /actuator/circuitbreakers
-```
-
----
-
-## Exemplo de requisição
-
-```bash
-curl -X POST http://localhost:8080/api/v1/payments \
-  -H "Content-Type: application/json" \
-  -d '{
-    "idempotencyKey": "order-12345-attempt-1",
-    "merchantId": "drystorm-001",
-    "amount": 150.00,
-    "currency": "BRL",
-    "paymentMethod": "CREDIT_CARD",
-    "description": "Lavagem Completa — Honda Civic",
-    "card": {
-      "holder": "João Silva",
-      "number": "4111111111111111",
-      "expiry": "12/26",
-      "cvv": "123",
-      "brand": "VISA"
-    }
-  }'
-```
-
 **Cartões para teste:**
 
 | Número final | Resultado |
