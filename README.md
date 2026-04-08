@@ -1,11 +1,12 @@
-# ⚡ Payment Gateway
+# Payment Gateway - API drystorm
 
 > Sistema de Gateway de Pagamentos com retentativas inteligentes — DryStorm
 
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?style=flat&logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-6DB33F?style=flat&logo=spring)
 ![RabbitMQ](https://img.shields.io/badge/RabbitMQ-3.13-FF6600?style=flat&logo=rabbitmq)
-![Resilience4j](https://img.shields.io/badge/Resilience4j-2.2-4CAF50?style=flat)
+
+![esquemazitaç](https://github.com/user-attachments/assets/0dc5e854-0d5f-4569-9717-9d6cf2ff7a7c)
 
 ---
 
@@ -23,7 +24,7 @@
 
 ---
 
-## Como rodar
+## Como executar o projeto
 
 ```bash
 # 1. Subir a infra (PostgreSQL + RabbitMQ)
@@ -183,7 +184,5 @@ Cobertura principal:
 
 - **Java 21** + **Spring Boot 3.2**
 - **RabbitMQ 3.13** com filas TTL para Exponential Backoff
-- **Resilience4j 2.2** — Circuit Breaker, Retry, Rate Limiter, Bulkhead
-- **PostgreSQL 16** + **Flyway** para migrations
-- **Outbox Pattern** com `FOR UPDATE SKIP LOCKED` para multi-instância
+- **PostgreSQL 16**
 - **Docker** + **Docker Compose**
