@@ -13,7 +13,7 @@ Drystorm é um projeto full stack com backend em Java, contemplando API REST, au
 
 ---
 
-## Como executar o projeto
+## Como executar o projeto:
 
 ```bash
 # 1. clonar repositório
@@ -82,7 +82,7 @@ POST /api/v1/payments
 └─────────────────────────────────────┘
 ```
 
-## Endpoints
+## Endpoints:
 
 ### Público
 ```
@@ -113,7 +113,7 @@ Controla a taxa de falha do banco simulado:
 
 ---
 
-## Testes
+## Testes:
 
 ```bash
 ./mvnw test
@@ -126,9 +126,13 @@ Cobertura principal:
 
 ---
 
-## Stack Tecnológico
+## Stack Tecnológico:
+![Java](https://img.shields.io/badge/Java-21-ED8B00?style=flat&logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-6DB33F?style=flat&logo=spring)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=flat&logo=postgresql)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
 - **Java 21** + **Spring Boot**
 - **PostgreSQL**
-- **RabbitMQ**
-- **Docker** + **Docker Compose**
+- **Docker**
