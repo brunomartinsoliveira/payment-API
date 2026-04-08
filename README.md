@@ -2,10 +2,6 @@
 
 > Sistema de Gateway de Pagamentos com retentativas inteligentes — DryStorm
 
-![Java](https://img.shields.io/badge/Java-21-ED8B00?style=flat&logo=java)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-6DB33F?style=flat&logo=spring)
-![RabbitMQ](https://img.shields.io/badge/RabbitMQ-3.13-FF6600?style=flat&logo=rabbitmq)
-
 ![esquemazitaç](https://github.com/user-attachments/assets/0dc5e854-0d5f-4569-9717-9d6cf2ff7a7c)
 
 ---
