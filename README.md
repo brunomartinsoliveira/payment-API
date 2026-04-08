@@ -7,16 +7,22 @@
 ## Como executar o projeto
 
 ```bash
-# 1. Subir a infra (PostgreSQL + RabbitMQ)
+# 1. clonar repositório
+git clone https://github.com/brunomartinsoliveira/payment-API
+
+# 2. entrar na pasta do projeto backend
+cd backend
+
+# 3. subir a infra (PostgreSQL + RabbitMQ)
 docker compose up postgres rabbitmq -d
 
-# 2. Rodar a API
+# 4. rodar a API
 ./mvnw spring-boot:run
 
-# 3. Subir tudo junto (incluindo API no Docker)
+# 5. subir tudo junto (incluindo API no Docker)
 docker compose up -d
 
-# 4. Com PgAdmin e ferramentas extras
+# 6. com PgAdmin e ferramentas extras
 docker compose --profile tools up -d
 ```
 
