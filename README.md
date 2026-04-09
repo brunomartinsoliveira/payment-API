@@ -137,7 +137,9 @@ Cobertura principal:
 - **PostgreSQL**
 - **Docker**
 
-- ## Licença:
+---
+
+## Licença:
 
 MIT.
 
