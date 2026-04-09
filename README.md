@@ -136,3 +136,8 @@ Cobertura principal:
 - **Java 21** + **Spring Boot**
 - **PostgreSQL**
 - **Docker**
+
+- ## Licença:
+
+MIT.
+
