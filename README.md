@@ -1,26 +1,38 @@
 # Payment API
 
-API REST de pagamentos desenvolvida com Java 21 e Spring Boot. O projeto simula um gateway de pagamentos que recebe requisições de cobrança (cartão ou PIX), persiste no banco e processa de forma assíncrona via RabbitMQ.
+Esse sistema de API é utilizado em empresas que processam pagamentos, e-commerce, aplicativos de delivery, plataformas SaaS. Nele eu quis aplicar o fluxo prático levando em consideração que é um dos domínios mais comuns no mercado Java. Usei como base gateways reais como PagSeguro e Stripe funcionam e modelei os requisitos com base nisso — criação de cobrança, consulta de status, cancelamento e reprocessamento de pagamentos recusados. A estrutura está preparada para escalar — o processamento é assíncrono justamente por isso. O fluxo foi pensado para um merchant — uma loja — que envia cobranças e consulta o status dos pagamentos.
 
 ## Tecnologias
 
-- Java 21
+- Java 21 
 - Spring Boot 3.2
+- Spring Data JPA
 - PostgreSQL
 - RabbitMQ
 - Docker / Docker Compose
 - Swagger UI
+- JUnit 5
+
 
 ## Como rodar localmente
 
 **Pré-requisitos:** Docker instalado
 
 ```bash
-# 1. Subir banco e fila
+# 1. Clonar o repositório
+git clone https://github.com/brunomartinsoliveira/payment-API
+cd payment-API
+
+# 2. Subir o banco de dados e o RabbitMQ
 docker compose up postgres rabbitmq -d
 
-# 2. Rodar a aplicação
-./mvnw spring-boot:run
+# 3. Rodar a aplicação
+mvn spring-boot:run
+
+# 4. Acessar
+Swagger UI = http://localhost:8080/swagger-ui.html
+RabbitMQ Management = http://localhost:15672
+
 ```
 
 Ou subir tudo junto:
