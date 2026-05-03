@@ -51,33 +51,6 @@ docker compose up -d
 | PATCH | /api/v1/payments/{id}/cancel | Cancelar pagamento pendente |
 | POST | /api/v1/payments/{id}/retry | Reprocessar pagamento recusado |
 
-Documentação completa: `http://localhost:8080/swagger-ui.html`
-
-## Cartões para teste
-
-| Final do cartão | Resultado |
-|-----------------|-----------|
-| `4000` | Recusado |
-| `5200` | Recusado |
-| `0000` | Recusado |
-| qualquer outro | Aprovado (sujeito à taxa de falha configurada) |
-
-## Variáveis de ambiente
-
-Copie o `.env.example` e ajuste conforme necessário:
-
-```bash
-cp .env.example .env
-```
-
-A variável `ACQUIRER_FAILURE_RATE` controla a taxa de falha simulada do adquirente (entre `0.0` e `1.0`).
-
-## Testes
-
-```bash
-./mvnw test
-```
-
 ## Serviços disponíveis
 
 | Serviço | URL |
