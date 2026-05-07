@@ -58,3 +58,13 @@ docker compose up -d
 | API | http://localhost:8080 |
 | Swagger UI | http://localhost:8080/swagger-ui.html |
 | RabbitMQ Management | http://localhost:15672 |
+
+## 👨‍💻 Autor
+
+Bruno Martins de Oliveira
+[LinkedIn](https://www.linkedin.com/in/brunooliveiradev/)
+
+## 📄 Licença
+
+MIT
+
